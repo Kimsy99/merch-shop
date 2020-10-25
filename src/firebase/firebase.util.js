@@ -12,6 +12,34 @@ const config = {
   appId: "1:466073915304:web:55bd21b40f7091a952179d",
   measurementId: "G-Y1HRCNXCE6",
 };
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  if (!userAuth) return;
+  const userRef = firestore.doc(`users/${userAuth.uid}`); //get user reference at that location
+  const snapShot = userRef.get(); //get location le then now get snapshot
+  // console.log(snapShot);
+
+  //check whether this account exists (make sure no duplicate) -> if not then we need to use document reference object to collect it, not snapshot (bcs snapshot rep data only)
+  if (!snapShot.exists) {
+    //we want the user name, email and datatime this is created
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    //make sure if any error happens still ok
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData,
+      });
+    } catch (err) {
+      console.log("error: ", err.message);
+    }
+  }
+  return userRef;
+};
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth(); //we export the authentication out

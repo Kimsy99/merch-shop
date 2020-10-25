@@ -5,7 +5,7 @@ import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.components.jsx";
 import SignInSignUp from "./pages/sign-in-and-sign-up-page/sign-in-and-sign-up.components";
-import { auth } from "./firebase/firebase.util";
+import { auth, createUserProfileDocument } from "./firebase/firebase.util";
 const HatsPage = () => {
   return (
     <div>
@@ -22,10 +22,25 @@ class App extends React.Component {
   }
   unsubscribeFromAuth = null;
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      //take current state of user then set the user state into current state
-      this.setState({ currentUser: user });
-      console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      // //take current state of user then set the user state into current state
+      // this.setState({ currentUser: user });
+      // console.log(user);
+      // createUserProfileDocument(user);
+      // console.log(userAuth);
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot((snapshot) => {
+          this.setState(
+            { currentUser: snapshot.id, ...snapshot.data() },
+            () => {
+              console.log(this.state);
+            }
+          );
+        });
+      } else {
+        this.setState({ currentUser: userAuth });
+      }
     });
   }
   //close subscription when leave
