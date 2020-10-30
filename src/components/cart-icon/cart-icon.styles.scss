@@ -1,0 +1,20 @@
+.cart-icon{
+  width: 45px;
+  height: 45px;
+  position: relative;
+  display: flex; //let all flexiblke item be the same length regardless of its component
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .shopping-icon{
+    width: 24px;
+    height: 24px;
+  }
+  .item-count{
+    position: absolute; //position relative to its nearest positioned ancestor
+    font-size: 10px;
+    font-weight: bold;
+    bottom: 12px;
+  }
+}

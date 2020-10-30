@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "./header.styles.scss";
+import CartIcon from "../cart-icon/cart-icon.components";
 import { ReactComponent as Logo } from "../../assets/Xtech Logo black text.svg";
 import { auth } from "../../firebase/firebase.util";
 const Header = ({ currentUser }) => (
@@ -26,6 +27,7 @@ const Header = ({ currentUser }) => (
           Sign in
         </Link>
       )}
+      <CartIcon />
     </div>
   </div>
 );
