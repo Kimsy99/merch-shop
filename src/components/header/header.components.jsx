@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import "./header.styles.scss";
 import { ReactComponent as Logo } from "../../assets/Xtech Logo black text.svg";
 import { auth } from "../../firebase/firebase.util";
@@ -28,4 +30,8 @@ const Header = ({ currentUser }) => (
   </div>
 );
 
-export default Header;
+//connect() and mapStateToProps will be use when we need it from reducers
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+export default connect(mapStateToProps)(Header); //
