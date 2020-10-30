@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 
 import "./header.styles.scss";
 import CartIcon from "../cart-icon/cart-icon.components";
+import CartDropdown from "../cart-dropdown/cart-dropdown.components";
 import { ReactComponent as Logo } from "../../assets/Xtech Logo black text.svg";
 import { auth } from "../../firebase/firebase.util";
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link to="/" className="logo-container">
       <Logo className="logo" />
@@ -29,11 +30,13 @@ const Header = ({ currentUser }) => (
       )}
       <CartIcon />
     </div>
+    {hidden ? null : <CartDropdown />}
   </div>
 );
 
 //connect() and mapStateToProps will be use when we need it from reducers
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+  currentUser,
+  hidden,
 });
 export default connect(mapStateToProps)(Header); //
