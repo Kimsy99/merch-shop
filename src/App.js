@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.components.jsx";
@@ -55,18 +55,25 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/hats" component={HatsPage} />
-          <Route exact path="/shop" component={ShopPage} />
-          <Route exact path="/signin" component={SignInSignUp} />
+          <Route path="/shop" component={ShopPage} />
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              this.props.currentUser ? <Redirect to="/" /> : <SignInSignUp />
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
-
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
 const mapDispatchToProps = (dispatch) => ({
   //set current user -> it goes to the function that take user object, then call dispatch ->  pass it to the a dispatch. then we call in setCurrentUser function with paramter of user in dispatch (user will be used as the payload)
   //dispatch is like -> whatever object you are passing me, is going to be a action object that i will pass to all reducer (action object is like what that are returned in user.action)
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
