@@ -8,11 +8,12 @@ const PreviewCollection = ({ title, items }) => (
       {items
         .filter((item, idx) => idx < 4)
         .map((
-          { id, ...itemProps } //for each type of item we only display 4 items
+          item //for each type of item we only display 4 items
         ) => (
-          <CollectionItem key={id} {...itemProps} />
+          <CollectionItem key={item.id} item={item} />
         ))}
     </div>
   </div>
 );
+
 export default PreviewCollection;

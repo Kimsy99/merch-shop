@@ -8,13 +8,7 @@ import SignInSignUp from "./pages/sign-in-and-sign-up-page/sign-in-and-sign-up.c
 import { auth, createUserProfileDocument } from "./firebase/firebase.util";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
-const HatsPage = () => {
-  return (
-    <div>
-      <hi>Hats Page hereeeee</hi>
-    </div>
-  );
-};
+
 class App extends React.Component {
   // We dont need this anymore
   // constructor() {
