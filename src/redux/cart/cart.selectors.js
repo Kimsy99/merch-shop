@@ -10,10 +10,16 @@ const selectCart = (state) => state.cart; //input selector -> return a piece of 
 
 export const selectCartItems = createSelector(
   [selectCart],
-  (cart) => cart.cartItems
+  (cart) => cart.cartItems //pass out the cart items
 );
+
+export const selectCartHidden = createSelector(
+  [selectCart],
+  (cart) => cart.hidden
+);
+
 export const selectCartItemsCount = createSelector(
-  [selectCartItems],
+  [selectCartItems], //we take the cart items
   (cartItems) =>
     cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0)
 );

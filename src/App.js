@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.components.jsx";
@@ -8,7 +9,7 @@ import SignInSignUp from "./pages/sign-in-and-sign-up-page/sign-in-and-sign-up.c
 import { auth, createUserProfileDocument } from "./firebase/firebase.util";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
-
+import { selectCurrentUser } from "./redux/user/user.selectors";
 class App extends React.Component {
   // We dont need this anymore
   // constructor() {
@@ -62,8 +63,8 @@ class App extends React.Component {
     );
   }
 }
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 const mapDispatchToProps = (dispatch) => ({
   //set current user -> it goes to the function that take user object, then call dispatch ->  pass it to the a dispatch. then we call in setCurrentUser function with paramter of user in dispatch (user will be used as the payload)
