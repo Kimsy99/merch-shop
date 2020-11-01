@@ -1,16 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { selectCollections } from "../../redux/shop/shop.selector";
-import PreviewCollection from "../../components/preview-collection/preview-collection.components";
-const ShopPage = ({ collections }) => (
+import { Route } from "react-router";
+import CollectionOverview from "../../components/collection-overview/collection-overview.components";
+import CollectionPage from "../collection/collection.components";
+const ShopPage = ({ match }) => (
   <div className="shop-page">
-    {collections.map(({ id, ...otherCollectionProps }) => (
-      <PreviewCollection key={id} {...otherCollectionProps} /> //we pass in every item in a same category
-    ))}
+    <Route exact path={`${match.path}`} component={CollectionOverview} />
+    <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
   </div>
 );
-const mapStateToProps = createStructuredSelector({
-  collections: selectCollections,
-});
-export default connect(mapStateToProps)(ShopPage);
+export default ShopPage;
+
+//pass category id as parameter then we we put /hats -> categoryId = hats => then we can know which page it is going and publish which one
