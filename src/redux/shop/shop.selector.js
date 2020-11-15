@@ -6,7 +6,7 @@ export const selectCollections = createSelector(
   [selectShop],
   (shop) => shop.collections
 );
-
+//bcs we now is object -> however the component can only read array -> we convert it
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
   (collections) => Object.keys(collections).map((key) => collections[key])
