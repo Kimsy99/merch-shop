@@ -70,7 +70,10 @@ export const convertCollectionsSnapshotToMap = (collections) => {
       items,
     };
   });
-  console.log(transformedCollection);
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection; //each object into key is title contain the object we have here
+    return accumulator;
+  }, {});
 };
 export const auth = firebase.auth(); //we export the authentication out
 export const firestore = firebase.firestore();
