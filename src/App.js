@@ -7,15 +7,11 @@ import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.components.jsx';
 import SignInSignUp from './pages/sign-in-and-sign-up-page/sign-in-and-sign-up.components';
 import Checkout from './pages/checkout/checkout.components';
-import {
-  auth,
-  createUserProfileDocument,
-  addCollectionAndDocument,
-} from './firebase/firebase.util';
+import { auth, createUserProfileDocument } from './firebase/firebase.util';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
-import { selectCollectionsForPreview } from './redux/shop/shop.selector';
+
 class App extends React.Component {
   // We dont need this anymore
   // constructor() {
@@ -26,7 +22,7 @@ class App extends React.Component {
   // }
   unsubscribeFromAuth = null;
   componentDidMount() {
-    const { setCurrentUser, collectionsArray } = this.props; //destructor it since we are using a few times
+    const { setCurrentUser } = this.props; //destructor it since we are using a few times
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       // //take current state of user then set the user state into current state
       // this.setState({ currentUser: user });
@@ -45,10 +41,7 @@ class App extends React.Component {
         });
       } //else {
       setCurrentUser(userAuth); //directly pass in  what object we wanna update with
-      addCollectionAndDocument(
-        'collections',
-        collectionsArray.map(({ title, items }) => ({ title, items }))
-      );
+
       // }
     });
   }
@@ -78,7 +71,6 @@ class App extends React.Component {
 }
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  collectionsArray: selectCollectionsForPreview,
 });
 const mapDispatchToProps = (dispatch) => ({
   //set current user -> it goes to the function that take user object, then call dispatch ->  pass it to the a dispatch. then we call in setCurrentUser function with paramter of user in dispatch (user will be used as the payload)
