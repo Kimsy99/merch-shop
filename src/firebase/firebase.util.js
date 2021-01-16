@@ -50,12 +50,12 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 export const addCollectionAndDocument = async (collectionKey, objectsToAdd) => {
   const collectionRef = firestore.collection(collectionKey);
 
-  const batch = firestore.batch();
+  const batch = firestore.batch(); //batch our set get those things into 1
   objectsToAdd.forEach((obj) => {
-    const newDocRef = collectionRef.doc();
+    const newDocRef = collectionRef.doc(); // create a new doc ref and randomly generate id for it
     batch.set(newDocRef, obj);
   });
-  return await batch.commit();
+  return await batch.commit(); //batch together
 };
 
 //convert to object from array
