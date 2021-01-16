@@ -26,14 +26,23 @@ class ShopPage extends React.Component {
   componentDidMount() {
     const { updateCollection } = this.props;
     const collectionRef = firestore.collection('collections'); //get collection ref
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(
-      //get the data
-      async (snapshot) => {
-        const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-        updateCollection(collectionsMap);
-        this.setState({ loading: false });
-      }
-    ); //when collectionRef updates/ when the code runfor the first time then it will send us the snapshot of the code of collection array
+
+    // // 1. This is based on Observables observer method
+    // this.unsubscribeFromSnapshot = collectionRef.onSnapshot(
+    //   //get the data
+    //   async (snapshot) => {
+    //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+    //     updateCollection(collectionsMap);
+    //     this.setState({ loading: false });
+    //   }
+    // ); //when collectionRef updates/ when the code runfor the first time then it will send us the snapshot of the code of collection array
+
+    // 2. promise method -> (only diff is that it wont run continuously like OO method)
+    collectionRef.get().then((snapshot) => {
+      const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+      updateCollection(collectionsMap);
+      this.setState({ loading: false });
+    });
   }
   render() {
     const { match } = this.props;
