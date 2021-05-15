@@ -3,14 +3,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
-  apiKey: 'AIzaSyCq9LwDRm5WixoblJ0rzUThreF46Lr6-gk',
-  authDomain: 'merch-db-b2c46.firebaseapp.com',
-  databaseURL: 'https://merch-db-b2c46.firebaseio.com',
-  projectId: 'merch-db-b2c46',
-  storageBucket: 'merch-db-b2c46.appspot.com',
-  messagingSenderId: '466073915304',
-  appId: '1:466073915304:web:55bd21b40f7091a952179d',
-  measurementId: 'G-Y1HRCNXCE6',
+  // enter firebase config here
 };
 firebase.initializeApp(config);
 export const createUserProfileDocument = async (userAuth, additionalData) => {
